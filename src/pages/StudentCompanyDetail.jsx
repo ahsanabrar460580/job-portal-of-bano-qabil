@@ -155,7 +155,7 @@ const StudentCompanyDetail = () => {
     );
     setCompany(foundCompany);
     setLoading(false);
-  }, [companyId]);
+  }, [companyId, companiesDatabase]);
 
   const handleApply = () => {
     if (!user) {

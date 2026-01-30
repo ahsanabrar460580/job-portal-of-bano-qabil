@@ -87,7 +87,7 @@ const StudentDashboard = () => {
       setLoading(false);
     }, 1000);
     return () => clearTimeout(timer);
-  }, []);
+  }, [mockApplications, mockProfile]);
 
   const getStatusBadge = (status) => {
     const badges = {

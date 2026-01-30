@@ -203,7 +203,7 @@ const SkillBasedCompanies = () => {
       setFilteredCompanies(matched);
       setLoading(false);
     }, 1000);
-  }, [user?.skills]);
+  }, [user?.skills, companiesDatabase]);
 
   // Filter and sort
   useEffect(() => {
