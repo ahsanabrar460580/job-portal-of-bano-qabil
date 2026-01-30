@@ -12,7 +12,6 @@ const SkillBasedCompanies = () => {
   const [loading, setLoading] = useState(true);
   const [filterSkill, setFilterSkill] = useState("");
   const [sortBy, setSortBy] = useState("match");
-  const [selectedCompany, setSelectedCompany] = useState(null);
 
   // Mock Database - Companies with required skills
   const companiesDatabase = [
@@ -26,9 +25,15 @@ const SkillBasedCompanies = () => {
       requiredSkills: ["React", "JavaScript", "Node.js"],
       openPositions: 5,
       salary: "Rs. 100,000 - 150,000",
-      aboutCompany: "Building scalable web solutions since 2015. We are a team of 50+ talented developers.",
-      benefits: ["Health Insurance", "Remote Work", "Learning Budget", "Stock Options"],
-      industry: "Technology"
+      aboutCompany:
+        "Building scalable web solutions since 2015. We are a team of 50+ talented developers.",
+      benefits: [
+        "Health Insurance",
+        "Remote Work",
+        "Learning Budget",
+        "Stock Options",
+      ],
+      industry: "Technology",
     },
     {
       id: 2,
@@ -40,9 +45,15 @@ const SkillBasedCompanies = () => {
       requiredSkills: ["Python", "Machine Learning", "Data Science"],
       openPositions: 3,
       salary: "Rs. 80,000 - 120,000",
-      aboutCompany: "Pioneering AI solutions for businesses. Backed by top-tier investors.",
-      benefits: ["Flexible Hours", "Career Growth", "Team Outings", "Startup Equity"],
-      industry: "AI/ML"
+      aboutCompany:
+        "Pioneering AI solutions for businesses. Backed by top-tier investors.",
+      benefits: [
+        "Flexible Hours",
+        "Career Growth",
+        "Team Outings",
+        "Startup Equity",
+      ],
+      industry: "AI/ML",
     },
     {
       id: 3,
@@ -54,9 +65,15 @@ const SkillBasedCompanies = () => {
       requiredSkills: ["Figma", "UI/UX", "Adobe XD", "CSS"],
       openPositions: 2,
       salary: "Rs. 70,000 - 110,000",
-      aboutCompany: "Creating beautiful digital experiences. Award-winning design agency.",
-      benefits: ["Portfolio Building", "Mentorship", "Conference Tickets", "Creative Freedom"],
-      industry: "Design"
+      aboutCompany:
+        "Creating beautiful digital experiences. Award-winning design agency.",
+      benefits: [
+        "Portfolio Building",
+        "Mentorship",
+        "Conference Tickets",
+        "Creative Freedom",
+      ],
+      industry: "Design",
     },
     {
       id: 4,
@@ -68,9 +85,15 @@ const SkillBasedCompanies = () => {
       requiredSkills: ["AWS", "Docker", "Kubernetes", "Linux"],
       openPositions: 4,
       salary: "Rs. 120,000 - 180,000",
-      aboutCompany: "Enterprise cloud solutions provider serving Fortune 500 companies.",
-      benefits: ["Certification Programs", "Hardware Allowance", "Relocation", "Bonus Structure"],
-      industry: "Cloud/DevOps"
+      aboutCompany:
+        "Enterprise cloud solutions provider serving Fortune 500 companies.",
+      benefits: [
+        "Certification Programs",
+        "Hardware Allowance",
+        "Relocation",
+        "Bonus Structure",
+      ],
+      industry: "Cloud/DevOps",
     },
     {
       id: 5,
@@ -82,9 +105,15 @@ const SkillBasedCompanies = () => {
       requiredSkills: ["React Native", "Flutter", "JavaScript", "Java"],
       openPositions: 6,
       salary: "Rs. 90,000 - 140,000",
-      aboutCompany: "Creating innovative mobile solutions with 100+ apps in the market.",
-      benefits: ["App Launch Bonus", "Side Project Support", "Tech Books", "Gym Membership"],
-      industry: "Mobile Development"
+      aboutCompany:
+        "Creating innovative mobile solutions with 100+ apps in the market.",
+      benefits: [
+        "App Launch Bonus",
+        "Side Project Support",
+        "Tech Books",
+        "Gym Membership",
+      ],
+      industry: "Mobile Development",
     },
     {
       id: 6,
@@ -96,9 +125,15 @@ const SkillBasedCompanies = () => {
       requiredSkills: ["SQL", "Tableau", "Python", "Power BI"],
       openPositions: 3,
       salary: "Rs. 100,000 - 150,000",
-      aboutCompany: "Turning data into insights. Serving 200+ enterprise clients.",
-      benefits: ["Dashboard Certification", "Client Exposure", "Analytics Tools", "Performance Bonus"],
-      industry: "Data Analytics"
+      aboutCompany:
+        "Turning data into insights. Serving 200+ enterprise clients.",
+      benefits: [
+        "Dashboard Certification",
+        "Client Exposure",
+        "Analytics Tools",
+        "Performance Bonus",
+      ],
+      industry: "Data Analytics",
     },
     {
       id: 7,
@@ -110,9 +145,15 @@ const SkillBasedCompanies = () => {
       requiredSkills: ["React", "Node.js", "MongoDB", "JavaScript"],
       openPositions: 5,
       salary: "Rs. 95,000 - 145,000",
-      aboutCompany: "Complete web and app development. 10 years of industry experience.",
-      benefits: ["Training Programs", "Project Choice", "Mentoring Opportunities", "Growth Path"],
-      industry: "Full Stack"
+      aboutCompany:
+        "Complete web and app development. 10 years of industry experience.",
+      benefits: [
+        "Training Programs",
+        "Project Choice",
+        "Mentoring Opportunities",
+        "Growth Path",
+      ],
+      industry: "Full Stack",
     },
     {
       id: 8,
@@ -124,12 +165,19 @@ const SkillBasedCompanies = () => {
       requiredSkills: ["JavaScript", "Network Security", "Python", "Linux"],
       openPositions: 2,
       salary: "Rs. 110,000 - 160,000",
-      aboutCompany: "Protecting digital assets for top companies. ISO 27001 certified.",
-      benefits: ["Security Clearance", "Certifications", "Premium Tools", "Executive Mentoring"],
-      industry: "Cybersecurity"
-    }
+      aboutCompany:
+        "Protecting digital assets for top companies. ISO 27001 certified.",
+      benefits: [
+        "Security Clearance",
+        "Certifications",
+        "Premium Tools",
+        "Executive Mentoring",
+      ],
+      industry: "Cybersecurity",
+    },
   ];
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     // Simulate user skills from profile
     if (user?.skills) {
@@ -141,11 +189,12 @@ const SkillBasedCompanies = () => {
     // Calculate match percentage
     setTimeout(() => {
       const matched = companiesDatabase.map((company) => {
+        const skills = user?.skills || ["React", "JavaScript", "CSS", "HTML"];
         const matchedSkills = company.requiredSkills.filter((skill) =>
-          studentSkills.includes(skill)
+          skills.includes(skill),
         );
         const matchPercentage = Math.round(
-          (matchedSkills.length / company.requiredSkills.length) * 100
+          (matchedSkills.length / company.requiredSkills.length) * 100,
         );
         return { ...company, matchPercentage, matchedSkills };
       });
@@ -173,7 +222,9 @@ const SkillBasedCompanies = () => {
     setFilteredCompanies(filtered);
   }, [filterSkill, sortBy, matchedCompanies]);
 
-  const allSkills = [...new Set(companiesDatabase.flatMap((c) => c.requiredSkills))];
+  const allSkills = [
+    ...new Set(companiesDatabase.flatMap((c) => c.requiredSkills)),
+  ];
 
   const handleViewDetails = (company) => {
     navigate(`/company/${company.id}`, { state: { company } });
@@ -219,7 +270,11 @@ const SkillBasedCompanies = () => {
         <h2 className="section-title">📌 Your Skills</h2>
         <div className="skills-container">
           {studentSkills.map((skill, idx) => (
-            <div key={idx} className="skill-chip" style={{ animationDelay: `${idx * 0.05}s` }}>
+            <div
+              key={idx}
+              className="skill-chip"
+              style={{ animationDelay: `${idx * 0.05}s` }}
+            >
               <span className="skill-icon">✓</span>
               {skill}
             </div>
@@ -273,9 +328,15 @@ const SkillBasedCompanies = () => {
           {filteredCompanies.length > 0 ? (
             <div className="companies-grid">
               {filteredCompanies.map((company, idx) => (
-                <div key={company.id} className="company-card" style={{ animationDelay: `${idx * 0.08}s` }}>
+                <div
+                  key={company.id}
+                  className="company-card"
+                  style={{ animationDelay: `${idx * 0.08}s` }}
+                >
                   <div className="card-top-bar">
-                    <span className="match-badge">{company.matchPercentage}% Match</span>
+                    <span className="match-badge">
+                      {company.matchPercentage}% Match
+                    </span>
                     <span className="company-industry">{company.industry}</span>
                   </div>
 
@@ -304,8 +365,8 @@ const SkillBasedCompanies = () => {
                   <div className="match-progress">
                     <div className="progress-label">Match Score</div>
                     <div className="progress-bar">
-                      <div 
-                        className="progress-fill" 
+                      <div
+                        className="progress-fill"
                         style={{ width: `${company.matchPercentage}%` }}
                       ></div>
                     </div>
@@ -315,32 +376,40 @@ const SkillBasedCompanies = () => {
                     <span className="matched-label">Matched Skills:</span>
                     <div className="skill-tags">
                       {company.matchedSkills.map((skill, idx) => (
-                        <span key={idx} className="skill-tag">{skill}</span>
+                        <span key={idx} className="skill-tag">
+                          {skill}
+                        </span>
                       ))}
                     </div>
                   </div>
 
                   <div className="missing-skills">
-                    {company.requiredSkills.filter(s => !studentSkills.includes(s)).length > 0 && (
+                    {company.requiredSkills.filter(
+                      (s) => !studentSkills.includes(s),
+                    ).length > 0 && (
                       <>
                         <span className="missing-label">Skills to Learn:</span>
                         <div className="skill-tags">
-                          {company.requiredSkills.filter(s => !studentSkills.includes(s)).map((skill, idx) => (
-                            <span key={idx} className="skill-tag missing">{skill}</span>
-                          ))}
+                          {company.requiredSkills
+                            .filter((s) => !studentSkills.includes(s))
+                            .map((skill, idx) => (
+                              <span key={idx} className="skill-tag missing">
+                                {skill}
+                              </span>
+                            ))}
                         </div>
                       </>
                     )}
                   </div>
 
                   <div className="card-actions">
-                    <button 
+                    <button
                       className="btn-view-details"
                       onClick={() => handleViewDetails(company)}
                     >
                       View Details
                     </button>
-                    <button 
+                    <button
                       className="btn-apply"
                       onClick={() => handleViewDetails(company)}
                     >
@@ -354,7 +423,10 @@ const SkillBasedCompanies = () => {
             <div className="no-results">
               <span className="no-results-icon">🔍</span>
               <h3>No Companies Found</h3>
-              <p>Try adjusting your filters or learn new skills to match more companies</p>
+              <p>
+                Try adjusting your filters or learn new skills to match more
+                companies
+              </p>
             </div>
           )}
         </div>

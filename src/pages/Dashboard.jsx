@@ -1,109 +1,117 @@
-import React, { useState, useEffect } from 'react';
-import { useAuth } from '../context/AuthContext';
-import { useNavigate } from 'react-router-dom';
-import './StudentDashboard.css';
+import React, { useState, useEffect } from "react";
+import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
+import "./StudentDashboard.css";
 
 const StudentDashboard = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState('overview');
+  const [activeTab, setActiveTab] = useState("overview");
   const [applications, setApplications] = useState([]);
   const [profile, setProfile] = useState({});
 
   // Mock student profile data
   const mockProfile = {
-    fullName: user?.name || 'Student Name',
-    email: user?.email || 'student@email.com',
-    phone: '+92-300-1234567',
-    location: 'Karachi, Pakistan',
-    headline: 'Aspiring Full Stack Developer',
-    bio: 'Passionate about building web applications and learning new technologies.',
+    fullName: user?.name || "Student Name",
+    email: user?.email || "student@email.com",
+    phone: "+92-300-1234567",
+    location: "Karachi, Pakistan",
+    headline: "Aspiring Full Stack Developer",
+    bio: "Passionate about building web applications and learning new technologies.",
     profileCompletion: 85,
-    skills: ['React', 'JavaScript', 'Node.js', 'MongoDB', 'CSS', 'HTML'],
+    skills: ["React", "JavaScript", "Node.js", "MongoDB", "CSS", "HTML"],
     education: [
       {
-        school: 'National Institute of Technology',
-        degree: 'B.Tech Computer Science',
-        year: '2023',
-        cgpa: '8.2'
-      }
+        school: "National Institute of Technology",
+        degree: "B.Tech Computer Science",
+        year: "2023",
+        cgpa: "8.2",
+      },
     ],
     experience: [
       {
-        company: 'Tech Solutions Inc',
-        position: 'Junior Frontend Developer',
-        duration: 'Jan 2024 - Present',
-        description: 'Building React applications'
-      }
-    ]
+        company: "Tech Solutions Inc",
+        position: "Junior Frontend Developer",
+        duration: "Jan 2024 - Present",
+        description: "Building React applications",
+      },
+    ],
   };
 
   // Mock applications data
   const mockApplications = [
     {
       id: 1,
-      companyName: 'Tech Corp',
-      position: 'Frontend Developer',
-      appliedDate: '2026-01-25',
-      status: 'pending',
-      logo: '🏢',
-      salary: 'Rs. 100,000 - 150,000'
+      companyName: "Tech Corp",
+      position: "Frontend Developer",
+      appliedDate: "2026-01-25",
+      status: "pending",
+      logo: "🏢",
+      salary: "Rs. 100,000 - 150,000",
     },
     {
       id: 2,
-      companyName: 'StartUp Inc',
-      position: 'Full Stack Developer',
-      appliedDate: '2026-01-20',
-      status: 'accepted',
-      logo: '🚀',
-      salary: 'Rs. 80,000 - 120,000'
+      companyName: "StartUp Inc",
+      position: "Full Stack Developer",
+      appliedDate: "2026-01-20",
+      status: "accepted",
+      logo: "🚀",
+      salary: "Rs. 80,000 - 120,000",
     },
     {
       id: 3,
-      companyName: 'Cloud Systems',
-      position: 'Backend Developer',
-      appliedDate: '2026-01-15',
-      status: 'rejected',
-      logo: '☁️',
-      salary: 'Rs. 120,000 - 180,000'
+      companyName: "Cloud Systems",
+      position: "Backend Developer",
+      appliedDate: "2026-01-15",
+      status: "rejected",
+      logo: "☁️",
+      salary: "Rs. 120,000 - 180,000",
     },
     {
       id: 4,
-      companyName: 'Mobile Innovations',
-      position: 'React Native Developer',
-      appliedDate: '2026-01-10',
-      status: 'pending',
-      logo: '📱',
-      salary: 'Rs. 90,000 - 140,000'
-    }
+      companyName: "Mobile Innovations",
+      position: "React Native Developer",
+      appliedDate: "2026-01-10",
+      status: "pending",
+      logo: "📱",
+      salary: "Rs. 90,000 - 140,000",
+    },
   ];
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
-    setTimeout(() => {
+    const timer = setTimeout(() => {
       setProfile(mockProfile);
       setApplications(mockApplications);
       setLoading(false);
     }, 1000);
+    return () => clearTimeout(timer);
   }, []);
 
   const getStatusBadge = (status) => {
     const badges = {
-      pending: { icon: '⏳', text: 'Pending', class: 'status-pending' },
-      accepted: { icon: '✅', text: 'Accepted', class: 'status-accepted' },
-      rejected: { icon: '❌', text: 'Rejected', class: 'status-rejected' }
+      pending: { icon: "⏳", text: "Pending", class: "status-pending" },
+      accepted: { icon: "✅", text: "Accepted", class: "status-accepted" },
+      rejected: { icon: "❌", text: "Rejected", class: "status-rejected" },
     };
     const badge = badges[status] || badges.pending;
-    return <span className={`status-badge ${badge.class}`}>{badge.icon} {badge.text}</span>;
+    return (
+      <span className={`status-badge ${badge.class}`}>
+        {badge.icon} {badge.text}
+      </span>
+    );
   };
 
-  const pendingCount = applications.filter(a => a.status === 'pending').length;
-  const acceptedCount = applications.filter(a => a.status === 'accepted').length;
-  const rejectedCount = applications.filter(a => a.status === 'rejected').length;
+  const pendingCount = applications.filter(
+    (a) => a.status === "pending",
+  ).length;
+  const acceptedCount = applications.filter(
+    (a) => a.status === "accepted",
+  ).length;
 
   return (
     <div className="student-dashboard">
-      {/* Loading State */}
       {loading && (
         <div className="loading-overlay">
           <div className="loader-spinner"></div>
@@ -113,39 +121,40 @@ const StudentDashboard = () => {
 
       {!loading && (
         <>
-          {/* Header Section */}
           <div className="dashboard-header">
             <div className="header-content">
               <h1 className="header-title">
                 <span className="greeting-icon">👋</span>
-                Welcome Back, {profile.fullName?.split(' ')[0]}!
+                Welcome Back, {profile.fullName?.split(" ")[0]}!
               </h1>
               <p className="header-subtitle">Your career journey starts here</p>
             </div>
             <div className="header-actions">
-              <button 
+              <button
                 className="btn-edit-profile"
-                onClick={() => navigate('/student-profile')}
+                onClick={() => navigate("/student-profile")}
               >
                 ✏️ Edit Profile
               </button>
-              <button 
+              <button
                 className="btn-find-jobs"
-                onClick={() => navigate('/skill-based-companies')}
+                onClick={() => navigate("/skill-based-companies")}
               >
                 🔍 Find Companies
               </button>
             </div>
           </div>
 
-          {/* Stats Cards */}
           <div className="stats-grid">
             <div className="stat-card profile-stat">
               <div className="stat-icon">👤</div>
               <div className="stat-content">
                 <h3 className="stat-label">Profile Completion</h3>
                 <div className="progress-bar">
-                  <div className="progress-fill" style={{ width: `${profile.profileCompletion}%` }}></div>
+                  <div
+                    className="progress-fill"
+                    style={{ width: `${profile.profileCompletion}%` }}
+                  ></div>
                 </div>
                 <p className="stat-value">{profile.profileCompletion}%</p>
               </div>
@@ -179,37 +188,34 @@ const StudentDashboard = () => {
             </div>
           </div>
 
-          {/* Tabs */}
           <div className="tabs-section">
             <div className="tabs-header">
-              <button 
-                className={`tab-button ${activeTab === 'overview' ? 'active' : ''}`}
-                onClick={() => setActiveTab('overview')}
+              <button
+                className={`tab-button ${activeTab === "overview" ? "active" : ""}`}
+                onClick={() => setActiveTab("overview")}
               >
                 <span className="tab-icon">📊</span>
                 Overview
               </button>
-              <button 
-                className={`tab-button ${activeTab === 'applications' ? 'active' : ''}`}
-                onClick={() => setActiveTab('applications')}
+              <button
+                className={`tab-button ${activeTab === "applications" ? "active" : ""}`}
+                onClick={() => setActiveTab("applications")}
               >
                 <span className="tab-icon">📋</span>
                 Applications
               </button>
-              <button 
-                className={`tab-button ${activeTab === 'profile' ? 'active' : ''}`}
-                onClick={() => setActiveTab('profile')}
+              <button
+                className={`tab-button ${activeTab === "profile" ? "active" : ""}`}
+                onClick={() => setActiveTab("profile")}
               >
                 <span className="tab-icon">👤</span>
                 Profile
               </button>
             </div>
 
-            {/* Overview Tab */}
-            {activeTab === 'overview' && (
+            {activeTab === "overview" && (
               <div className="tab-content overview-tab">
                 <div className="overview-grid">
-                  {/* Profile Card */}
                   <div className="info-card profile-card">
                     <div className="card-header">
                       <h3 className="card-title">📌 Profile Summary</h3>
@@ -238,7 +244,6 @@ const StudentDashboard = () => {
                     </div>
                   </div>
 
-                  {/* Skills Card */}
                   <div className="info-card skills-card">
                     <div className="card-header">
                       <h3 className="card-title">⚡ Your Skills</h3>
@@ -246,14 +251,17 @@ const StudentDashboard = () => {
                     <div className="card-body skills-body">
                       <div className="skills-list">
                         {profile.skills?.map((skill, idx) => (
-                          <span key={idx} className="skill-badge">{skill}</span>
+                          <span key={idx} className="skill-badge">
+                            {skill}
+                          </span>
                         ))}
                       </div>
-                      <button className="btn-add-skill">+ Add More Skills</button>
+                      <button className="btn-add-skill">
+                        + Add More Skills
+                      </button>
                     </div>
                   </div>
 
-                  {/* Education Card */}
                   <div className="info-card education-card">
                     <div className="card-header">
                       <h3 className="card-title">🎓 Education</h3>
@@ -263,13 +271,14 @@ const StudentDashboard = () => {
                         <div key={idx} className="education-item">
                           <h4 className="edu-school">{edu.school}</h4>
                           <p className="edu-degree">{edu.degree}</p>
-                          <p className="edu-meta">{edu.year} • CGPA: {edu.cgpa}</p>
+                          <p className="edu-meta">
+                            {edu.year} • CGPA: {edu.cgpa}
+                          </p>
                         </div>
                       ))}
                     </div>
                   </div>
 
-                  {/* Experience Card */}
                   <div className="info-card experience-card">
                     <div className="card-header">
                       <h3 className="card-title">💼 Experience</h3>
@@ -289,19 +298,25 @@ const StudentDashboard = () => {
               </div>
             )}
 
-            {/* Applications Tab */}
-            {activeTab === 'applications' && (
+            {activeTab === "applications" && (
               <div className="tab-content applications-tab">
                 <div className="applications-list">
                   {applications.length > 0 ? (
                     applications.map((app, idx) => (
-                      <div key={app.id} className="application-item" style={{ animationDelay: `${idx * 0.1}s` }}>
+                      <div
+                        key={app.id}
+                        className="application-item"
+                        style={{ animationDelay: `${idx * 0.1}s` }}
+                      >
                         <div className="app-left">
                           <div className="app-logo">{app.logo}</div>
                           <div className="app-info">
                             <h3 className="app-company">{app.companyName}</h3>
                             <p className="app-position">{app.position}</p>
-                            <p className="app-date">Applied: {new Date(app.appliedDate).toLocaleDateString()}</p>
+                            <p className="app-date">
+                              Applied:{" "}
+                              {new Date(app.appliedDate).toLocaleDateString()}
+                            </p>
                           </div>
                         </div>
                         <div className="app-center">
@@ -317,19 +332,23 @@ const StudentDashboard = () => {
                     <div className="no-applications">
                       <span className="no-app-icon">📭</span>
                       <h3>No Applications Yet</h3>
-                      <p>Start applying to companies to see your applications here</p>
+                      <p>
+                        Start applying to companies to see your applications
+                        here
+                      </p>
                     </div>
                   )}
                 </div>
               </div>
             )}
 
-            {/* Profile Tab */}
-            {activeTab === 'profile' && (
+            {activeTab === "profile" && (
               <div className="tab-content profile-tab">
                 <div className="profile-content">
                   <div className="profile-header">
-                    <div className="profile-avatar">{profile.fullName?.charAt(0).toUpperCase()}</div>
+                    <div className="profile-avatar">
+                      {profile.fullName?.charAt(0).toUpperCase()}
+                    </div>
                     <div className="profile-header-info">
                       <h2>{profile.fullName}</h2>
                       <p className="profile-headline">{profile.headline}</p>
@@ -346,7 +365,9 @@ const StudentDashboard = () => {
                     <h3>Skills ({profile.skills?.length || 0})</h3>
                     <div className="skills-grid">
                       {profile.skills?.map((skill, idx) => (
-                        <div key={idx} className="skill-item">{skill}</div>
+                        <div key={idx} className="skill-item">
+                          {skill}
+                        </div>
                       ))}
                     </div>
                   </div>
