@@ -1,7 +1,47 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import "./StudentDashboard.css";
+
+// Mock applications data (moved to module scope to fix ESLint warnings)
+const mockApplications = [
+  {
+    id: 1,
+    companyName: "Tech Corp",
+    position: "Frontend Developer",
+    appliedDate: "2026-01-25",
+    status: "pending",
+    logo: "🏢",
+    salary: "Rs. 100,000 - 150,000",
+  },
+  {
+    id: 2,
+    companyName: "StartUp Inc",
+    position: "Full Stack Developer",
+    appliedDate: "2026-01-20",
+    status: "accepted",
+    logo: "🚀",
+    salary: "Rs. 80,000 - 120,000",
+  },
+  {
+    id: 3,
+    companyName: "Cloud Systems",
+    position: "Backend Developer",
+    appliedDate: "2026-01-15",
+    status: "rejected",
+    logo: "☁️",
+    salary: "Rs. 120,000 - 180,000",
+  },
+  {
+    id: 4,
+    companyName: "Mobile Innovations",
+    position: "React Native Developer",
+    appliedDate: "2026-01-10",
+    status: "pending",
+    logo: "📱",
+    salary: "Rs. 90,000 - 140,000",
+  },
+];
 
 const StudentDashboard = () => {
   const { user } = useAuth();
@@ -11,75 +51,37 @@ const StudentDashboard = () => {
   const [applications, setApplications] = useState([]);
   const [profile, setProfile] = useState({});
 
-  // Mock student profile data
-  const mockProfile = {
-    fullName: user?.name || "Student Name",
-    email: user?.email || "student@email.com",
-    phone: "+92-300-1234567",
-    location: "Karachi, Pakistan",
-    headline: "Aspiring Full Stack Developer",
-    bio: "Passionate about building web applications and learning new technologies.",
-    profileCompletion: 85,
-    skills: ["React", "JavaScript", "Node.js", "MongoDB", "CSS", "HTML"],
-    education: [
-      {
-        school: "National Institute of Technology",
-        degree: "B.Tech Computer Science",
-        year: "2023",
-        cgpa: "8.2",
-      },
-    ],
-    experience: [
-      {
-        company: "Tech Solutions Inc",
-        position: "Junior Frontend Developer",
-        duration: "Jan 2024 - Present",
-        description: "Building React applications",
-      },
-    ],
-  };
+  // Mock student profile data - memoized since it depends on user
+  const mockProfile = useMemo(
+    () => ({
+      fullName: user?.name || "Student Name",
+      email: user?.email || "student@email.com",
+      phone: "+92-300-1234567",
+      location: "Karachi, Pakistan",
+      headline: "Aspiring Full Stack Developer",
+      bio: "Passionate about building web applications and learning new technologies.",
+      profileCompletion: 85,
+      skills: ["React", "JavaScript", "Node.js", "MongoDB", "CSS", "HTML"],
+      education: [
+        {
+          school: "National Institute of Technology",
+          degree: "B.Tech Computer Science",
+          year: "2023",
+          cgpa: "8.2",
+        },
+      ],
+      experience: [
+        {
+          company: "Tech Solutions Inc",
+          position: "Junior Frontend Developer",
+          duration: "Jan 2024 - Present",
+          description: "Building React applications",
+        },
+      ],
+    }),
+    [user],
+  );
 
-  // Mock applications data
-  const mockApplications = [
-    {
-      id: 1,
-      companyName: "Tech Corp",
-      position: "Frontend Developer",
-      appliedDate: "2026-01-25",
-      status: "pending",
-      logo: "🏢",
-      salary: "Rs. 100,000 - 150,000",
-    },
-    {
-      id: 2,
-      companyName: "StartUp Inc",
-      position: "Full Stack Developer",
-      appliedDate: "2026-01-20",
-      status: "accepted",
-      logo: "🚀",
-      salary: "Rs. 80,000 - 120,000",
-    },
-    {
-      id: 3,
-      companyName: "Cloud Systems",
-      position: "Backend Developer",
-      appliedDate: "2026-01-15",
-      status: "rejected",
-      logo: "☁️",
-      salary: "Rs. 120,000 - 180,000",
-    },
-    {
-      id: 4,
-      companyName: "Mobile Innovations",
-      position: "React Native Developer",
-      appliedDate: "2026-01-10",
-      status: "pending",
-      logo: "📱",
-      salary: "Rs. 90,000 - 140,000",
-    },
-  ];
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     const timer = setTimeout(() => {
       setProfile(mockProfile);
@@ -87,7 +89,7 @@ const StudentDashboard = () => {
       setLoading(false);
     }, 1000);
     return () => clearTimeout(timer);
-  }, [mockApplications, mockProfile]);
+  }, [mockProfile]);
 
   const getStatusBadge = (status) => {
     const badges = {

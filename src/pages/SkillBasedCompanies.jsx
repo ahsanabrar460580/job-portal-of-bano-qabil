@@ -3,6 +3,170 @@ import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import "./SkillBasedCompanies.css";
 
+// Mock Database - Companies with required skills (moved to module scope to fix ESLint warnings)
+const companiesDatabase = [
+  {
+    id: 1,
+    name: "Tech Corp",
+    logo: "🏢",
+    website: "www.techcorp.com",
+    location: "📍 Karachi, Pakistan",
+    description: "Leading technology innovation company",
+    requiredSkills: ["React", "JavaScript", "Node.js"],
+    openPositions: 5,
+    salary: "Rs. 100,000 - 150,000",
+    aboutCompany:
+      "Building scalable web solutions since 2015. We are a team of 50+ talented developers.",
+    benefits: [
+      "Health Insurance",
+      "Remote Work",
+      "Learning Budget",
+      "Stock Options",
+    ],
+    industry: "Technology",
+  },
+  {
+    id: 2,
+    name: "StartUp Inc",
+    logo: "🚀",
+    website: "www.startupinc.com",
+    location: "📍 Lahore, Pakistan",
+    description: "Fast-growing startup focused on AI",
+    requiredSkills: ["Python", "Machine Learning", "Data Science"],
+    openPositions: 3,
+    salary: "Rs. 80,000 - 120,000",
+    aboutCompany:
+      "Pioneering AI solutions for businesses. Backed by top-tier investors.",
+    benefits: [
+      "Flexible Hours",
+      "Career Growth",
+      "Team Outings",
+      "Startup Equity",
+    ],
+    industry: "AI/ML",
+  },
+  {
+    id: 3,
+    name: "Design Studio",
+    logo: "🎨",
+    website: "www.designstudio.com",
+    location: "📍 Islamabad, Pakistan",
+    description: "Creative design and branding agency",
+    requiredSkills: ["Figma", "UI/UX", "Adobe XD", "CSS"],
+    openPositions: 2,
+    salary: "Rs. 70,000 - 110,000",
+    aboutCompany:
+      "Creating beautiful digital experiences. Award-winning design agency.",
+    benefits: [
+      "Portfolio Building",
+      "Mentorship",
+      "Conference Tickets",
+      "Creative Freedom",
+    ],
+    industry: "Design",
+  },
+  {
+    id: 4,
+    name: "Cloud Systems",
+    logo: "☁️",
+    website: "www.cloudsystems.com",
+    location: "📍 Hyderabad, Pakistan",
+    description: "Cloud infrastructure and DevOps",
+    requiredSkills: ["AWS", "Docker", "Kubernetes", "Linux"],
+    openPositions: 4,
+    salary: "Rs. 120,000 - 180,000",
+    aboutCompany:
+      "Enterprise cloud solutions provider serving Fortune 500 companies.",
+    benefits: [
+      "Certification Programs",
+      "Hardware Allowance",
+      "Relocation",
+      "Bonus Structure",
+    ],
+    industry: "Cloud/DevOps",
+  },
+  {
+    id: 5,
+    name: "Mobile Innovations",
+    logo: "📱",
+    website: "www.mobileinnovations.com",
+    location: "📍 Multan, Pakistan",
+    description: "Mobile app development company",
+    requiredSkills: ["React Native", "Flutter", "JavaScript", "Java"],
+    openPositions: 6,
+    salary: "Rs. 90,000 - 140,000",
+    aboutCompany:
+      "Creating innovative mobile solutions with 100+ apps in the market.",
+    benefits: [
+      "App Launch Bonus",
+      "Side Project Support",
+      "Tech Books",
+      "Gym Membership",
+    ],
+    industry: "Mobile Development",
+  },
+  {
+    id: 6,
+    name: "Data Analytics Pro",
+    logo: "📊",
+    website: "www.dataanalyticspro.com",
+    location: "📍 Karachi, Pakistan",
+    description: "Business intelligence and analytics",
+    requiredSkills: ["SQL", "Tableau", "Python", "Power BI"],
+    openPositions: 3,
+    salary: "Rs. 100,000 - 150,000",
+    aboutCompany:
+      "Turning data into insights. Serving 200+ enterprise clients.",
+    benefits: [
+      "Dashboard Certification",
+      "Client Exposure",
+      "Analytics Tools",
+      "Performance Bonus",
+    ],
+    industry: "Data Analytics",
+  },
+  {
+    id: 7,
+    name: "Full Stack Solutions",
+    logo: "⚙️",
+    website: "www.fullstacksolutions.com",
+    location: "📍 Peshawar, Pakistan",
+    description: "End-to-end development services",
+    requiredSkills: ["React", "Node.js", "MongoDB", "JavaScript"],
+    openPositions: 5,
+    salary: "Rs. 95,000 - 145,000",
+    aboutCompany:
+      "Complete web and app development. 10 years of industry experience.",
+    benefits: [
+      "Training Programs",
+      "Project Choice",
+      "Mentoring Opportunities",
+      "Growth Path",
+    ],
+    industry: "Full Stack",
+  },
+  {
+    id: 8,
+    name: "Cyber Security Corp",
+    logo: "🔒",
+    website: "www.cybersecuritycorp.com",
+    location: "📍 Rawalpindi, Pakistan",
+    description: "Enterprise cybersecurity solutions",
+    requiredSkills: ["JavaScript", "Network Security", "Python", "Linux"],
+    openPositions: 2,
+    salary: "Rs. 110,000 - 160,000",
+    aboutCompany:
+      "Protecting digital assets for top companies. ISO 27001 certified.",
+    benefits: [
+      "Security Clearance",
+      "Certifications",
+      "Premium Tools",
+      "Executive Mentoring",
+    ],
+    industry: "Cybersecurity",
+  },
+];
+
 const SkillBasedCompanies = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -13,171 +177,6 @@ const SkillBasedCompanies = () => {
   const [filterSkill, setFilterSkill] = useState("");
   const [sortBy, setSortBy] = useState("match");
 
-  // Mock Database - Companies with required skills
-  const companiesDatabase = [
-    {
-      id: 1,
-      name: "Tech Corp",
-      logo: "🏢",
-      website: "www.techcorp.com",
-      location: "📍 Karachi, Pakistan",
-      description: "Leading technology innovation company",
-      requiredSkills: ["React", "JavaScript", "Node.js"],
-      openPositions: 5,
-      salary: "Rs. 100,000 - 150,000",
-      aboutCompany:
-        "Building scalable web solutions since 2015. We are a team of 50+ talented developers.",
-      benefits: [
-        "Health Insurance",
-        "Remote Work",
-        "Learning Budget",
-        "Stock Options",
-      ],
-      industry: "Technology",
-    },
-    {
-      id: 2,
-      name: "StartUp Inc",
-      logo: "🚀",
-      website: "www.startupinc.com",
-      location: "📍 Lahore, Pakistan",
-      description: "Fast-growing startup focused on AI",
-      requiredSkills: ["Python", "Machine Learning", "Data Science"],
-      openPositions: 3,
-      salary: "Rs. 80,000 - 120,000",
-      aboutCompany:
-        "Pioneering AI solutions for businesses. Backed by top-tier investors.",
-      benefits: [
-        "Flexible Hours",
-        "Career Growth",
-        "Team Outings",
-        "Startup Equity",
-      ],
-      industry: "AI/ML",
-    },
-    {
-      id: 3,
-      name: "Design Studio",
-      logo: "🎨",
-      website: "www.designstudio.com",
-      location: "📍 Islamabad, Pakistan",
-      description: "Creative design and branding agency",
-      requiredSkills: ["Figma", "UI/UX", "Adobe XD", "CSS"],
-      openPositions: 2,
-      salary: "Rs. 70,000 - 110,000",
-      aboutCompany:
-        "Creating beautiful digital experiences. Award-winning design agency.",
-      benefits: [
-        "Portfolio Building",
-        "Mentorship",
-        "Conference Tickets",
-        "Creative Freedom",
-      ],
-      industry: "Design",
-    },
-    {
-      id: 4,
-      name: "Cloud Systems",
-      logo: "☁️",
-      website: "www.cloudsystems.com",
-      location: "📍 Hyderabad, Pakistan",
-      description: "Cloud infrastructure and DevOps",
-      requiredSkills: ["AWS", "Docker", "Kubernetes", "Linux"],
-      openPositions: 4,
-      salary: "Rs. 120,000 - 180,000",
-      aboutCompany:
-        "Enterprise cloud solutions provider serving Fortune 500 companies.",
-      benefits: [
-        "Certification Programs",
-        "Hardware Allowance",
-        "Relocation",
-        "Bonus Structure",
-      ],
-      industry: "Cloud/DevOps",
-    },
-    {
-      id: 5,
-      name: "Mobile Innovations",
-      logo: "📱",
-      website: "www.mobileinnovations.com",
-      location: "📍 Multan, Pakistan",
-      description: "Mobile app development company",
-      requiredSkills: ["React Native", "Flutter", "JavaScript", "Java"],
-      openPositions: 6,
-      salary: "Rs. 90,000 - 140,000",
-      aboutCompany:
-        "Creating innovative mobile solutions with 100+ apps in the market.",
-      benefits: [
-        "App Launch Bonus",
-        "Side Project Support",
-        "Tech Books",
-        "Gym Membership",
-      ],
-      industry: "Mobile Development",
-    },
-    {
-      id: 6,
-      name: "Data Analytics Pro",
-      logo: "📊",
-      website: "www.dataanalyticspro.com",
-      location: "📍 Karachi, Pakistan",
-      description: "Business intelligence and analytics",
-      requiredSkills: ["SQL", "Tableau", "Python", "Power BI"],
-      openPositions: 3,
-      salary: "Rs. 100,000 - 150,000",
-      aboutCompany:
-        "Turning data into insights. Serving 200+ enterprise clients.",
-      benefits: [
-        "Dashboard Certification",
-        "Client Exposure",
-        "Analytics Tools",
-        "Performance Bonus",
-      ],
-      industry: "Data Analytics",
-    },
-    {
-      id: 7,
-      name: "Full Stack Solutions",
-      logo: "⚙️",
-      website: "www.fullstacksolutions.com",
-      location: "📍 Peshawar, Pakistan",
-      description: "End-to-end development services",
-      requiredSkills: ["React", "Node.js", "MongoDB", "JavaScript"],
-      openPositions: 5,
-      salary: "Rs. 95,000 - 145,000",
-      aboutCompany:
-        "Complete web and app development. 10 years of industry experience.",
-      benefits: [
-        "Training Programs",
-        "Project Choice",
-        "Mentoring Opportunities",
-        "Growth Path",
-      ],
-      industry: "Full Stack",
-    },
-    {
-      id: 8,
-      name: "Cyber Security Corp",
-      logo: "🔒",
-      website: "www.cybersecuritycorp.com",
-      location: "📍 Rawalpindi, Pakistan",
-      description: "Enterprise cybersecurity solutions",
-      requiredSkills: ["JavaScript", "Network Security", "Python", "Linux"],
-      openPositions: 2,
-      salary: "Rs. 110,000 - 160,000",
-      aboutCompany:
-        "Protecting digital assets for top companies. ISO 27001 certified.",
-      benefits: [
-        "Security Clearance",
-        "Certifications",
-        "Premium Tools",
-        "Executive Mentoring",
-      ],
-      industry: "Cybersecurity",
-    },
-  ];
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     // Simulate user skills from profile
     if (user?.skills) {
@@ -203,7 +202,7 @@ const SkillBasedCompanies = () => {
       setFilteredCompanies(matched);
       setLoading(false);
     }, 1000);
-  }, [user?.skills, companiesDatabase]);
+  }, [user?.skills]);
 
   // Filter and sort
   useEffect(() => {

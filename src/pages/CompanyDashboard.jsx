@@ -1,173 +1,172 @@
 import React, { useState, useEffect } from "react";
 import "./CompanyDashboard.css";
 
-const CompanyDashboard = () => {
-  const [applications, setApplications] = useState([]);
-  const [selectedCV, setSelectedCV] = useState(null);
-  const [filterStatus, setFilterStatus] = useState("all");
-  const [searchStudent, setSearchStudent] = useState("");
-  const [loading, setLoading] = useState(true);
-  const [sortBy, setSortBy] = useState("newest");
-
-  // Mock Database - Applications with Student CVs
-  const mockApplications = [
-    {
-      id: 1,
-      studentId: 101,
-      studentName: "Ahsan Abrar",
+// Mock Database - Applications with Student CVs (moved to module scope to fix ESLint warnings)
+const mockApplications = [
+  {
+    id: 1,
+    studentId: 101,
+    studentName: "Ahsan Abrar",
+    email: "ahsanabrar460580@email.com",
+    phone: "+92-3001234567",
+    appliedDate: "2026-01-25",
+    status: "pending",
+    position: "Frontend Developer",
+    score: 8.5,
+    cv: {
+      fullName: "Ahsan Abrar",
       email: "ahsanabrar460580@email.com",
       phone: "+92-3001234567",
-      appliedDate: "2026-01-25",
-      status: "pending",
-      position: "Frontend Developer",
-      score: 8.5,
-      cv: {
-        fullName: "Ahsan Abrar",
-        email: "ahsanabrar460580@email.com",
-        phone: "+92-3001234567",
-        location: "Karachi, Pakistan",
-        summary:
-          "Passionate frontend developer with 2 years of experience in building responsive web applications.",
-        experience: [
-          {
-            company: "Tech Solutions Inc",
-            position: "Junior Frontend Developer",
-            duration: "Jan 2024 - Present",
-            description:
-              "Working on React applications and responsive UI design",
-          },
-        ],
-        education: [
-          {
-            school: "National Institute of Technology",
-            degree: "B.Tech Computer Science",
-            year: "2023",
-            cgpa: "8.2",
-          },
-        ],
-        skills: ["React", "JavaScript", "CSS", "HTML", "Responsive Design"],
-        certifications: ["React Certification from Udemy"],
-        portfolio: "https://404notfound.netlify.app/",
-      },
+      location: "Karachi, Pakistan",
+      summary:
+        "Passionate frontend developer with 2 years of experience in building responsive web applications.",
+      experience: [
+        {
+          company: "Tech Solutions Inc",
+          position: "Junior Frontend Developer",
+          duration: "Jan 2024 - Present",
+          description:
+            "Working on React applications and responsive UI design",
+        },
+      ],
+      education: [
+        {
+          school: "National Institute of Technology",
+          degree: "B.Tech Computer Science",
+          year: "2023",
+          cgpa: "8.2",
+        },
+      ],
+      skills: ["React", "JavaScript", "CSS", "HTML", "Responsive Design"],
+      certifications: ["React Certification from Udemy"],
+      portfolio: "https://404notfound.netlify.app/",
     },
-    {
-      id: 2,
-      studentId: 102,
-      studentName: "Danish Khan",
+  },
+  {
+    id: 2,
+    studentId: 102,
+    studentName: "Danish Khan",
+    email: "danish.khan@email.com",
+    phone: "+92-3001234568",
+    appliedDate: "2026-01-24",
+    status: "accepted",
+    position: "Frontend Developer",
+    score: 9.2,
+    cv: {
+      fullName: "Danish Khan",
       email: "danish.khan@email.com",
       phone: "+92-3001234568",
-      appliedDate: "2026-01-24",
-      status: "accepted",
-      position: "Frontend Developer",
-      score: 9.2,
-      cv: {
-        fullName: "Danish Khan",
-        email: "danish.khan@email.com",
-        phone: "+92-3001234568",
-        location: "Lahore, Pakistan",
-        summary:
-          "Full stack developer with expertise in modern web technologies.",
-        experience: [
-          {
-            company: "Digital Innovation Labs",
-            position: "Frontend Developer",
-            duration: "Mar 2024 - Present",
-            description: "Developing React applications with TypeScript",
-          },
-        ],
-        education: [
-          {
-            school: "University of Engineering and Technology",
-            degree: "B.Tech Information Technology",
-            year: "2023",
-            cgpa: "8.5",
-          },
-        ],
-        skills: ["React", "TypeScript", "Node.js", "MongoDB", "CSS", "Git"],
-        certifications: ["Full Stack Certification"],
-      },
+      location: "Lahore, Pakistan",
+      summary:
+        "Full stack developer with expertise in modern web technologies.",
+      experience: [
+        {
+          company: "Digital Innovation Labs",
+          position: "Frontend Developer",
+          duration: "Mar 2024 - Present",
+          description: "Developing React applications with TypeScript",
+        },
+      ],
+      education: [
+        {
+          school: "University of Engineering and Technology",
+          degree: "B.Tech Information Technology",
+          year: "2023",
+          cgpa: "8.5",
+        },
+      ],
+      skills: ["React", "TypeScript", "Node.js", "MongoDB", "CSS", "Git"],
+      certifications: ["Full Stack Certification"],
     },
-    {
-      id: 3,
-      studentId: 103,
-      studentName: "Fatima Hassan",
+  },
+  {
+    id: 3,
+    studentId: 103,
+    studentName: "Fatima Hassan",
+    email: "fatima.hassan@email.com",
+    phone: "+92-3001234569",
+    appliedDate: "2026-01-23",
+    status: "rejected",
+    position: "UI/UX Designer",
+    score: 7.8,
+    cv: {
+      fullName: "Fatima Hassan",
       email: "fatima.hassan@email.com",
       phone: "+92-3001234569",
-      appliedDate: "2026-01-23",
-      status: "rejected",
-      position: "UI/UX Designer",
-      score: 7.8,
-      cv: {
-        fullName: "Fatima Hassan",
-        email: "fatima.hassan@email.com",
-        phone: "+92-3001234569",
-        location: "Islamabad, Pakistan",
-        summary: "Creative UI/UX designer passionate about user experience.",
-        experience: [],
-        education: [
-          {
-            school: "National University of Sciences & Technology",
-            degree: "BS Graphic Design",
-            year: "2023",
-            cgpa: "8.0",
-          },
-        ],
-        skills: [
-          "Figma",
-          "Adobe XD",
-          "UI Design",
-          "UX Research",
-          "Prototyping",
-        ],
-        certifications: ["Google UX Design Certificate"],
-      },
+      location: "Islamabad, Pakistan",
+      summary: "Creative UI/UX designer passionate about user experience.",
+      experience: [],
+      education: [
+        {
+          school: "National University of Sciences & Technology",
+          degree: "BS Graphic Design",
+          year: "2023",
+          cgpa: "8.0",
+        },
+      ],
+      skills: [
+        "Figma",
+        "Adobe XD",
+        "UI Design",
+        "UX Research",
+        "Prototyping",
+      ],
+      certifications: ["Google UX Design Certificate"],
     },
-    {
-      id: 4,
-      studentId: 104,
-      studentName: "Ali Raza",
+  },
+  {
+    id: 4,
+    studentId: 104,
+    studentName: "Ali Raza",
+    email: "ali.raza@email.com",
+    phone: "+92-3001234570",
+    appliedDate: "2026-01-22",
+    status: "pending",
+    position: "Backend Developer",
+    score: 8.9,
+    cv: {
+      fullName: "Ali Raza",
       email: "ali.raza@email.com",
       phone: "+92-3001234570",
-      appliedDate: "2026-01-22",
-      status: "pending",
-      position: "Backend Developer",
-      score: 8.9,
-      cv: {
-        fullName: "Ali Raza",
-        email: "ali.raza@email.com",
-        phone: "+92-3001234570",
-        location: "Multan, Pakistan",
-        summary: "Backend developer with expertise in Node.js and databases.",
-        experience: [
-          {
-            company: "Cloud Services Ltd",
-            position: "Backend Developer",
-            duration: "Jul 2024 - Present",
-            description: "Building scalable APIs and database solutions",
-          },
-        ],
-        education: [
-          {
-            school: "Muhammad Ali Jinnah University",
-            degree: "B.S Computer Science",
-            year: "2023",
-            cgpa: "8.7",
-          },
-        ],
-        skills: ["Node.js", "MongoDB", "PostgreSQL", "Express", "REST APIs"],
-        certifications: ["Node.js Advanced Concepts"],
-      },
+      location: "Multan, Pakistan",
+      summary: "Backend developer with expertise in Node.js and databases.",
+      experience: [
+        {
+          company: "Cloud Services Ltd",
+          position: "Backend Developer",
+          duration: "Jul 2024 - Present",
+          description: "Building scalable APIs and database solutions",
+        },
+      ],
+      education: [
+        {
+          school: "Muhammad Ali Jinnah University",
+          degree: "B.S Computer Science",
+          year: "2023",
+          cgpa: "8.7",
+        },
+      ],
+      skills: ["Node.js", "MongoDB", "PostgreSQL", "Express", "REST APIs"],
+      certifications: ["Node.js Advanced Concepts"],
     },
-  ];
+  },
+];
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => {
-    // Simulate loading
-    setTimeout(() => {
-      setApplications(mockApplications);
-      setLoading(false);
-    }, 800);
-  }, []);
+  const CompanyDashboard = () => {
+    const [applications, setApplications] = useState([]);
+    const [selectedCV, setSelectedCV] = useState(null);
+    const [filterStatus, setFilterStatus] = useState("all");
+    const [searchStudent, setSearchStudent] = useState("");
+    const [loading, setLoading] = useState(true);
+    const [sortBy, setSortBy] = useState("newest");
+
+    useEffect(() => {
+      // Simulate loading
+      setTimeout(() => {
+        setApplications(mockApplications);
+        setLoading(false);
+      }, 800);
+    }, []);
 
   // Filter and search applications
   const filteredApplications = applications

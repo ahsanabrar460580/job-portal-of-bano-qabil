@@ -3,6 +3,142 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import "./Pages.css";
 
+// Mock Companies Database (moved to module scope to fix ESLint warnings)
+const companiesDatabase = [
+  {
+    id: 1,
+    name: "TechCorp Pakistan",
+    registrationNumber: "PRA-123456",
+    logo: "🏢",
+    industry: "Technology",
+    website: "www.techcorp.pk",
+    email: "hr@techcorp.pk",
+    phone: "+92-21-35678900",
+    city: "Karachi",
+    address: "Blue Area, Karachi",
+    employees: "101-500",
+    description:
+      "Leading technology company in Pakistan providing innovative solutions in web and mobile development.",
+    about:
+      "TechCorp Pakistan is a pioneer in digital transformation with over 15 years of experience. We work with Fortune 500 companies and startups alike.",
+    vision: "To be the most trusted technology partner in Pakistan.",
+    mission: "Delivering excellence through innovative technology solutions.",
+    openPositions: [
+      {
+        id: 1,
+        title: "Frontend Developer",
+        salary: "40,000-60,000",
+        type: "Internship",
+      },
+      {
+        id: 2,
+        title: "Backend Developer",
+        salary: "50,000-70,000",
+        type: "Full-time",
+      },
+      {
+        id: 3,
+        title: "UI/UX Designer",
+        salary: "35,000-55,000",
+        type: "Internship",
+      },
+    ],
+    requiredSkills: ["React", "JavaScript", "Node.js", "MongoDB"],
+    benefits: [
+      "🏥 Health Insurance",
+      "💰 Competitive Salary",
+      "🎓 Learning & Development",
+      "🏖️ Paid Leave",
+      "🚗 Transportation",
+    ],
+    reviews: 4.5,
+    applicants: 150,
+  },
+  {
+    id: 2,
+    name: "Digital Solutions",
+    registrationNumber: "PRA-789012",
+    logo: "💻",
+    industry: "Technology",
+    website: "www.digitalsolutions.pk",
+    email: "hr@digitalsolutions.pk",
+    phone: "+92-42-12345678",
+    city: "Lahore",
+    address: "DHA Phase 5, Lahore",
+    employees: "11-50",
+    description:
+      "Innovative digital agency focused on web design and development.",
+    about:
+      "Digital Solutions specializes in creating beautiful and functional digital products for businesses of all sizes.",
+    vision: "Empowering businesses through digital innovation.",
+    mission: "Creating digital solutions that matter.",
+    openPositions: [
+      {
+        id: 1,
+        title: "Junior Developer",
+        salary: "30,000-40,000",
+        type: "Internship",
+      },
+      {
+        id: 2,
+        title: "Web Designer",
+        salary: "35,000-50,000",
+        type: "Full-time",
+      },
+    ],
+    requiredSkills: ["React", "CSS", "JavaScript", "Figma"],
+    benefits: [
+      "🌟 Flexible Hours",
+      "💰 Competitive Salary",
+      "🎓 Training Programs",
+      "☕ Free Lunch",
+    ],
+    reviews: 4.8,
+    applicants: 80,
+  },
+  {
+    id: 3,
+    name: "StartUp Hub",
+    registrationNumber: "PRA-345678",
+    logo: "🚀",
+    industry: "Technology",
+    website: "www.startuphub.pk",
+    email: "hr@startuphub.pk",
+    phone: "+92-51-91234567",
+    city: "Islamabad",
+    address: "F-7, Islamabad",
+    employees: "1-10",
+    description: "Young and dynamic startup building next-gen products.",
+    about:
+      "StartUp Hub is a fast-growing tech startup focused on AI and machine learning solutions.",
+    vision: "Revolutionizing industries with AI.",
+    mission: "Building intelligent solutions for the future.",
+    openPositions: [
+      {
+        id: 1,
+        title: "Python Developer",
+        salary: "50,000-70,000",
+        type: "Full-time",
+      },
+      {
+        id: 2,
+        title: "Data Scientist",
+        salary: "60,000-80,000",
+        type: "Full-time",
+      },
+    ],
+    requiredSkills: ["Python", "Machine Learning", "SQL"],
+    benefits: [
+      "📈 Equity/Stock Options",
+      "💰 High Salary",
+      "🎓 Growth Opportunities",
+      "🎯 Challenging Work",
+    ],
+    reviews: 4.3,
+    applicants: 120,
+  },
+];
+
 const StudentCompanyDetail = () => {
   const { companyId } = useParams();
   const navigate = useNavigate();
@@ -11,143 +147,6 @@ const StudentCompanyDetail = () => {
   const [applied, setApplied] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  // Mock Companies Database
-  const companiesDatabase = [
-    {
-      id: 1,
-      name: "TechCorp Pakistan",
-      registrationNumber: "PRA-123456",
-      logo: "🏢",
-      industry: "Technology",
-      website: "www.techcorp.pk",
-      email: "hr@techcorp.pk",
-      phone: "+92-21-35678900",
-      city: "Karachi",
-      address: "Blue Area, Karachi",
-      employees: "101-500",
-      description:
-        "Leading technology company in Pakistan providing innovative solutions in web and mobile development.",
-      about:
-        "TechCorp Pakistan is a pioneer in digital transformation with over 15 years of experience. We work with Fortune 500 companies and startups alike.",
-      vision: "To be the most trusted technology partner in Pakistan.",
-      mission: "Delivering excellence through innovative technology solutions.",
-      openPositions: [
-        {
-          id: 1,
-          title: "Frontend Developer",
-          salary: "40,000-60,000",
-          type: "Internship",
-        },
-        {
-          id: 2,
-          title: "Backend Developer",
-          salary: "50,000-70,000",
-          type: "Full-time",
-        },
-        {
-          id: 3,
-          title: "UI/UX Designer",
-          salary: "35,000-55,000",
-          type: "Internship",
-        },
-      ],
-      requiredSkills: ["React", "JavaScript", "Node.js", "MongoDB"],
-      benefits: [
-        "🏥 Health Insurance",
-        "💰 Competitive Salary",
-        "🎓 Learning & Development",
-        "🏖️ Paid Leave",
-        "🚗 Transportation",
-      ],
-      reviews: 4.5,
-      applicants: 150,
-    },
-    {
-      id: 2,
-      name: "Digital Solutions",
-      registrationNumber: "PRA-789012",
-      logo: "💻",
-      industry: "Technology",
-      website: "www.digitalsolutions.pk",
-      email: "hr@digitalsolutions.pk",
-      phone: "+92-42-12345678",
-      city: "Lahore",
-      address: "DHA Phase 5, Lahore",
-      employees: "11-50",
-      description:
-        "Innovative digital agency focused on web design and development.",
-      about:
-        "Digital Solutions specializes in creating beautiful and functional digital products for businesses of all sizes.",
-      vision: "Empowering businesses through digital innovation.",
-      mission: "Creating digital solutions that matter.",
-      openPositions: [
-        {
-          id: 1,
-          title: "Junior Developer",
-          salary: "30,000-40,000",
-          type: "Internship",
-        },
-        {
-          id: 2,
-          title: "Web Designer",
-          salary: "35,000-50,000",
-          type: "Full-time",
-        },
-      ],
-      requiredSkills: ["React", "CSS", "JavaScript", "Figma"],
-      benefits: [
-        "🌟 Flexible Hours",
-        "💰 Competitive Salary",
-        "🎓 Training Programs",
-        "☕ Free Lunch",
-      ],
-      reviews: 4.8,
-      applicants: 80,
-    },
-    {
-      id: 3,
-      name: "StartUp Hub",
-      registrationNumber: "PRA-345678",
-      logo: "🚀",
-      industry: "Technology",
-      website: "www.startuphub.pk",
-      email: "hr@startuphub.pk",
-      phone: "+92-51-91234567",
-      city: "Islamabad",
-      address: "F-7, Islamabad",
-      employees: "1-10",
-      description: "Young and dynamic startup building next-gen products.",
-      about:
-        "StartUp Hub is a fast-growing tech startup focused on AI and machine learning solutions.",
-      vision: "Revolutionizing industries with AI.",
-      mission: "Building intelligent solutions for the future.",
-      openPositions: [
-        {
-          id: 1,
-          title: "Python Developer",
-          salary: "50,000-70,000",
-          type: "Full-time",
-        },
-        {
-          id: 2,
-          title: "Data Scientist",
-          salary: "60,000-80,000",
-          type: "Full-time",
-        },
-      ],
-      requiredSkills: ["Python", "Machine Learning", "SQL"],
-      benefits: [
-        "📈 Equity/Stock Options",
-        "💰 High Salary",
-        "🎓 Growth Opportunities",
-        "🎯 Challenging Work",
-      ],
-      reviews: 4.3,
-      applicants: 120,
-    },
-  ];
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     // Simulate API call
     const foundCompany = companiesDatabase.find(
@@ -155,7 +154,7 @@ const StudentCompanyDetail = () => {
     );
     setCompany(foundCompany);
     setLoading(false);
-  }, [companyId, companiesDatabase]);
+  }, [companyId]);
 
   const handleApply = () => {
     if (!user) {
