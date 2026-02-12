@@ -1,0 +1,207 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.home {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f5f5f5;
+  color: #333;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.App {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+a {
+  color: #667eea;
+  text-decoration: none;
+  transition: color 0.3s ease;
+  -webkit-touch-callout: none;
+}
+
+a:active {
+  color: #764ba2;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #333;
+  margin-bottom: 15px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+p {
+  line-height: 1.6;
+  color: #666;
+  margin: 0;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+nav {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  z-index: 100;
+}
+
+main {
+  flex: 1;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* ============================================
+   RESPONSIVE: 1101px+ (Desktop)
+   ============================================ */
+@media (min-width: 1101px) {
+  h1 { font-size: 2.8em; }
+  h2 { font-size: 2.2em; }
+  h3 { font-size: 1.8em; }
+  h4 { font-size: 1.4em; }
+  p { font-size: 1.05em; line-height: 1.8; }
+}
+
+/* ============================================
+   RESPONSIVE: 1001-1100px
+   ============================================ */
+@media (max-width: 1100px) {
+  h1 { font-size: 2.5em; }
+  h2 { font-size: 2em; }
+  h3 { font-size: 1.6em; }
+  h4 { font-size: 1.25em; }
+  p { font-size: 1.02em; line-height: 1.75; }
+}
+
+/* ============================================
+   RESPONSIVE: 901-999px
+   ============================================ */
+@media (max-width: 999px) {
+  h1 { font-size: 2.2em; }
+  h2 { font-size: 1.8em; }
+  h3 { font-size: 1.4em; }
+  h4 { font-size: 1.15em; }
+  p { font-size: 1em; line-height: 1.7; }
+}
+
+/* ============================================
+   RESPONSIVE: 768-899px (Tablet)
+   ============================================ */
+@media (max-width: 899px) {
+  .App { margin-left: 0; }
+  h1 { font-size: 2em; }
+  h2 { font-size: 1.6em; }
+  h3 { font-size: 1.2em; }
+  h4 { font-size: 1.05em; }
+  p { font-size: 0.98em; line-height: 1.65; }
+}
+
+/* ============================================
+   RESPONSIVE: 600-767px
+   ============================================ */
+@media (max-width: 767px) {
+  h1 { font-size: 1.8em; }
+  h2 { font-size: 1.4em; }
+  h3 { font-size: 1.1em; }
+  h4 { font-size: 0.95em; }
+  p { font-size: 0.95em; line-height: 1.6; }
+}
+
+/* ============================================
+   RESPONSIVE: 480-599px
+   ============================================ */
+@media (max-width: 599px) {
+  h1 { font-size: 1.6em; }
+  h2 { font-size: 1.25em; }
+  h3 { font-size: 1.05em; }
+  h4 { font-size: 0.9em; }
+  p { font-size: 0.92em; line-height: 1.5; }
+}
+
+/* ============================================
+   RESPONSIVE: 400-479px
+   ============================================ */
+@media (max-width: 479px) {
+  h1 { font-size: 1.5em; }
+  h2 { font-size: 1.15em; }
+  h3 { font-size: 1em; }
+  h4 { font-size: 0.85em; }
+  p { font-size: 0.9em; line-height: 1.45; }
+}
+
+/* ============================================
+   RESPONSIVE: 360-399px
+   ============================================ */
+@media (max-width: 399px) {
+  h1 { font-size: 1.4em; }
+  h2 { font-size: 1.1em; }
+  h3 { font-size: 0.95em; }
+  h4 { font-size: 0.8em; }
+  p { font-size: 0.88em; line-height: 1.4; }
+}
+
+/* ============================================
+   RESPONSIVE: 320-359px
+   ============================================ */
+@media (max-width: 359px) {
+  h1 { font-size: 1.3em; }
+  h2 { font-size: 1.05em; }
+  h3 { font-size: 0.9em; }
+  h4 { font-size: 0.75em; }
+  p { font-size: 0.86em; line-height: 1.35; }
+}
+
+/* ============================================
+   RESPONSIVE: 280-319px (Extra Small)
+   ============================================ */
+@media (max-width: 319px) {
+  h1 { font-size: 1.2em; }
+  h2 { font-size: 1em; }
+  h3 { font-size: 0.85em; }
+  h4 { font-size: 0.7em; }
+  p { font-size: 0.84em; line-height: 1.3; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
